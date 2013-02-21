@@ -123,7 +123,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   end
 
   def window
-    @window || Capybara::Selenium::Window.new(self)
+    @window ||= Capybara::Selenium::Window.new(self)
   end
   
   def quit
