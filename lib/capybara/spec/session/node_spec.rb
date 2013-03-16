@@ -87,7 +87,6 @@ Capybara::SpecHelper.spec "node" do
     it 'should set the contents of an inherited contenteditable element', :requires => [:js], editable: true do
       @session.visit('/with_js')
       parent=@session.find(:css, '#parent_editable')
-      binding.pry
       parent.find(:css,'#inherited_editable').set('WYSIWYG')
       parent.find(:css,'#inherited_editable').text.should == 'WYSIWYG'
     end 

@@ -40,6 +40,10 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
       #script can change a readonly element which user input cannot, so dont execute if readonly
       driver.browser.execute_script "arguments[0].value = ''", native unless self[:readonly]
       native.send_keys(value.to_s)
+    elsif is_content_editable?
+      click
+      native.clear
+      native.send_keys(value.to_s) 
     end
   end
 
@@ -84,6 +88,12 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
     !native.enabled?
   end
 
+  def is_content_editable?
+    res = native.attribute('iscontenteditable')
+    res = native.attribute('isContentEditable') === "true" if res===nil
+    res
+  end
+  
   alias :checked? :selected?
 
   def find_xpath(locator)
