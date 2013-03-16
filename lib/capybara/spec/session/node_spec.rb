@@ -72,11 +72,45 @@ Capybara::SpecHelper.spec "node" do
       @session.first('//input').value.should == ''
     end
     
+    it 'should change the contents of a contenteditable element', :requires => [:js], editable: true do
+      @session.visit('/with_js')
+      @session.find(:css,'#existing_content_editable').set('WYSIWYG')
+      @session.find(:css,'#existing_content_editable').text.should == 'WYSIWYG'
+    end
+    
+    it 'should set the contents of an empty contenteditable element', :requires => [:js], editable: true do
+      @session.visit('/with_js')
+      @session.find(:css,'#blank_content_editable').set('WYSIWYG')
+      @session.find(:css,'#blank_content_editable').text.should == 'WYSIWYG'
+    end
+    
+    it 'should set the contents of an inherited contenteditable element', :requires => [:js], editable: true do
+      @session.visit('/with_js')
+      parent=@session.find(:css, '#parent_editable')
+      binding.pry
+      parent.find(:css,'#inherited_editable').set('WYSIWYG')
+      parent.find(:css,'#inherited_editable').text.should == 'WYSIWYG'
+    end 
+    
+    it 'should not inherit contenteditable if contenteditable is false', :requires => [:js], editable: true do
+      @session.visit('/with_js')
+      parent=@session.find(:css, '#parent_editable')
+      parent.find(:css,'#not_content_editable').set('WYSIWYG')
+      parent.find(:css,'#inherited_editable').text.should_not == 'WYSIWYG'
+    end
+    
+    it 'should not set the contents if inheriting false for contenteditable', :requires => [:js], editable: true do
+      @session.visit('/with_js')
+      parent=@session.find(:css, '#parent_not_editable')
+      parent.find(:css, '#inherited_not_editable').set('WYSIWYG')
+      parent.find(:css, '#inherited_not_editable').text.should_not == 'WYSIWYG'
+    end
+    
     it "should not set if the text field is readonly" do
       @session.first('//input[@readonly]').value.should == 'should not change'
       @session.first('//input[@readonly]').set('changed')
       @session.first('//input[@readonly]').value.should == 'should not change'
-    end
+    end    
     
     it "should not set if the textarea is readonly" do
       @session.first('//textarea[@readonly]').value.should == 'textarea should not change'
