@@ -21,7 +21,7 @@ matrix:
     - gemfile: gemfiles/Gemfile.base-versions
       rvm: jruby-19mode
 before_install:
-  - URL='http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo unzip $FILE chromedriver -d /usr/local/bin; rm $FILE
+  - URL='http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux64.zip'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo unzip $FILE chromedriver -d /usr/bin; rm $FILE
   - URL='https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
 before_script:
   - sh -e /etc/init.d/xvfb start
