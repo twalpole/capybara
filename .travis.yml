@@ -1,14 +1,14 @@
 language: ruby
 rvm:
   - 1.9.3
-  - 2.0.0
-  - jruby-19mode
-  - rbx-2.1.1
-  - rbx-2.1.0
-  - rbx-2.0.0
+  # - 2.0.0
+  # - jruby-19mode
+  # - rbx-2.1.1
+  # - rbx-2.1.0
+  # - rbx-2.0.0
 gemfile:
   - Gemfile
-  - gemfiles/Gemfile.base-versions
+  # - gemfiles/Gemfile.base-versions
 matrix:
   exclude:
     # Nokogiri 1.3.3 is not compatible with Rubinius or JRuby
@@ -26,5 +26,6 @@ before_install:
 before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
+  - echo $PATH
 script: "bundle exec rake travis"
   
