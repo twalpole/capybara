@@ -27,5 +27,6 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
   - echo $PATH
+  - bundle exec echo $PATH
 script: "bundle exec rake travis"
   
