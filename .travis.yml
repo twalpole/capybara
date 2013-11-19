@@ -28,6 +28,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable
   - sudo chmod 1777 /dev/shm
+  - rvm use jruby-1.7.6 --install --binary --fuzzy --verify-downloads 1
 before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
