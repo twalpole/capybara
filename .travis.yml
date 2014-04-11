@@ -1,18 +1,9 @@
 language: ruby
 rvm:
-  - 1.9.3
   - 2.0.0
-  - 2.1.1
-  - jruby-19mode
-  - rbx
 gemfile:
   - Gemfile
 matrix:
-  include:
-    - gemfile: gemfiles/Gemfile.base-versions
-      rvm: 1.9.3
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: 2.1.1
   allow_failures:
     - gemfile: gemfiles/Gemfile.beta-versions
       rvm: 2.1.1
@@ -25,7 +16,11 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable --force-yes
   - sudo chmod 1777 /dev/shm
+  - sudo apt-get install fluxbox -y --force-yes
 before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
+  - mkdir -p ~/.fluxbox
+  - 'echo "session.screen0.fullMaximization: true" >> ~/.fluxbox/init'
+  - fluxbox > /dev/null 2>&1 &
 script: "bundle exec rake travis"
