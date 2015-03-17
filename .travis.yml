@@ -1,26 +1,26 @@
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1
+  # - 1.9.3
+  # - 2.0.0
+  # - 2.1
   - 2.2
-  - jruby-19mode
-  - rbx-2
+  # - jruby-19mode
+  # - rbx-2
 gemfile:
   - Gemfile
 matrix:
-  include:
-    - gemfile: gemfiles/Gemfile.base-versions
-      rvm: 1.9.3
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: 2.2
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: jruby-9.0.0.0.pre1
-  allow_failures:
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: 2.2
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: jruby-9.0.0.0.pre1
+  # include:
+  #   - gemfile: gemfiles/Gemfile.base-versions
+  #     rvm: 1.9.3
+  #   - gemfile: gemfiles/Gemfile.beta-versions
+  #     rvm: 2.2
+  #   - gemfile: gemfiles/Gemfile.beta-versions
+  #     rvm: jruby-9.0.0.0.pre1
+  # allow_failures:
+  #   - gemfile: gemfiles/Gemfile.beta-versions
+  #     rvm: 2.2
+  #   - gemfile: gemfiles/Gemfile.beta-versions
+  #     rvm: jruby-9.0.0.0.pre1
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true

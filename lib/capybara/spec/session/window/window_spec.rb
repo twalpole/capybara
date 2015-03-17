@@ -124,10 +124,10 @@ Capybara::SpecHelper.spec Capybara::Window, requires: [:windows] do
       # pending "This test fails when run on Travis for an unknown reason - setting to pending for now" if ENV['TRAVIS']
       screen_width, screen_height = @session.evaluate_script("[window.screen.availWidth, window.screen.availHeight];")
       window = @session.current_window
-      window.resize_to(screen_width-100, screen_height-100)
+      window.resize_to(screen_width-300, screen_height-200)
       expect(@session.evaluate_script("[window.outerWidth, window.outerHeight];")).to eq([screen_width-100, screen_height-100])
       window.maximize
-      sleep 0.5  # The timing on maximize is finicky on Travis -- wait a bit for maximize to occur
+      sleep 3  # The timing on maximize is finicky on Travis -- wait a bit for maximize to occur
       expect(@session.evaluate_script("[window.outerWidth, window.outerHeight];")).to eq([screen_width, screen_height])
     end
 
