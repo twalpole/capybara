@@ -47,7 +47,7 @@ module Capybara
 
       def spec(name, options={}, &block)
         @specs ||= []
-        @specs << [name, options, block]
+        @specs << [name, options, block] if options[:requires] && options[:requires].include?(:windows)
       end
 
       def run_specs(session, name, options={})
