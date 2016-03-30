@@ -99,7 +99,12 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
           # to about:blank, so we rescue this error and do nothing
           # instead.
         end
+
         @browser.navigate.to("about:blank")
+        #Ensure the page is empty and trigger a handled error for any modals that appear during unload
+        until find_xpath("/html/body/*").empty?
+          sleep 0.05
+        end
       rescue Selenium::WebDriver::Error::UnhandledAlertError
         # This error is thrown if an unhandled alert is on the page
         # Firefox appears to automatically dismiss this alert, chrome does not
