@@ -33,16 +33,25 @@ Capybara::SpecHelper.spec '#reset_session!' do
   end
 
   it "is synchronous" do
+    puts "is synchronous"
     @session.visit("/with_slow_unload")
+    puts "visited"
     @session.reset_session!
+    puts "reset"
     expect(@session).to have_no_selector :xpath, "/html/body/*", wait: false
+    puts "has no selector"
   end
 
   it "handles modals during unload" do
+    puts "handles modals"
     @session.visit('/with_unload_alert')
+    puts "visited"
     expect(@session).to have_selector(:css, 'div')
+    puts "has loaded"
     expect { @session.reset_session! }.not_to raise_error
+    puts "reset"
     expect(@session).to have_no_selector :xpath, "/html/body/*", wait: false
+    puts "has no selector"
   end
 
   it "raises any standard errors caught inside the server", :requires => [:server] do

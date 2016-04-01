@@ -104,16 +104,20 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
         start_time = Capybara::Helpers.monotonic_time
         #Ensure the page is empty and trigger a handled error for any modals that appear during unload
         until find_xpath("/html/body/*").empty?
-          raise Timeout::Error.new('Waiting for session reset') if (Capybara::Helpers.monotonic_time - start_time) >= 10
+          tt = 0
+          raise Timeout::Error.new('Waiting for session reset') if ((tt = Capybara::Helpers.monotonic_time - start_time) >= 10)
+          puts "timer is #{tt}"
           sleep 0.05
         end
       rescue Selenium::WebDriver::Error::UnhandledAlertError
+        puts "rescued unhandled alert error"
         # This error is thrown if an unhandled alert is on the page
         # Firefox appears to automatically dismiss this alert, chrome does not
         # We'll try to accept it
         begin
           @browser.switch_to.alert.accept
         rescue Selenium::WebDriver::Error::NoAlertPresentError
+          puts "rescused no alert present error"
           # The alert is now gone - nothing to do
         end
         # try cleaning up the browser again
