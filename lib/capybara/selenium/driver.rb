@@ -101,8 +101,10 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
         end
 
         @browser.navigate.to("about:blank")
+        start_time = Capybara::Helpers.monotonic_time
         #Ensure the page is empty and trigger a handled error for any modals that appear during unload
         until find_xpath("/html/body/*").empty?
+          raise Timeout::Error.new('Waiting for session reset') if (Capybara::Helpers.monotonic_time - start_time) >= 10
           sleep 0.05
         end
       rescue Selenium::WebDriver::Error::UnhandledAlertError
