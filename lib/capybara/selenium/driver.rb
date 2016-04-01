@@ -102,7 +102,16 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
       navigated = false
 
       begin
-        @browser.navigate.to("about:blank") if !navigated
+        if !navigated
+          begin
+            @browser.manage.delete_all_cookies
+          rescue Selenium::WebDriver::Error::UnhandledError
+            # delete_all_cookies fails when we've previously gone
+            # to about:blank, so we rescue this error and do nothing
+            # instead.
+          end
+          @browser.navigate.to("about:blank")
+        end
         navigated = true
 
         start_time = Capybara::Helpers.monotonic_time
