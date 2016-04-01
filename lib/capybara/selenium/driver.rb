@@ -91,20 +91,11 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
 
   def reset!
     # Use instance variable directly so we avoid starting the browser just to reset the session
-    begin @browser.manage.delete_all_cookies
-    rescue Selenium::WebDriver::Error::UnhandledError
-      # delete_all_cookies fails when we've previously gone
-      # to about:blank, so we rescue this error and do nothing
-      # instead.
-    end
-
+    navigated = false
     if @browser
-      navigated = false
-
       begin
         if !navigated
           begin
-
             @browser.manage.delete_all_cookies
           rescue Selenium::WebDriver::Error::UnhandledError
             # delete_all_cookies fails when we've previously gone
@@ -116,8 +107,8 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
         navigated = true
 
         start_time = Capybara::Helpers.monotonic_time
-        #Ensure the page is empty and trigger a handled error for any modals that appear during unload
-        until find_xpath("/html/body/*").empty?
+        #Ensure the page is empty and trigger an uhandled error for any modals that appear during unload
+        until find_xpath("/html/body/*").empty? do
           tt = 0
           raise Timeout::Error.new('Waiting for session reset') if ((tt = Capybara::Helpers.monotonic_time - start_time) >= 10)
           puts "timer is #{tt}"
