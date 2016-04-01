@@ -104,6 +104,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
       begin
         if !navigated
           begin
+
             @browser.manage.delete_all_cookies
           rescue Selenium::WebDriver::Error::UnhandledError
             # delete_all_cookies fails when we've previously gone
