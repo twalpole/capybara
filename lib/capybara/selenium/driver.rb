@@ -121,6 +121,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
         # We'll try to accept it
         begin
           @browser.switch_to.alert.accept
+          sleep 0.5 # allow time for the modal to be handled
         rescue Selenium::WebDriver::Error::NoAlertPresentError
           puts "rescused no alert present error"
           # The alert is now gone - nothing to do
